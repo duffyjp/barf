@@ -11,7 +11,7 @@ module Barf
     terminal_width = `tput cols`.to_i
 
     # Height must be divisible by 2 for the half pixels to be clean.
-    new_height     = (image.height * (0.5 * terminal_width.to_f / image.width)).to_i * 2
+    new_height     = (image.height * (0.5 * terminal_width / image.width)).to_i * 2
 
     image.resize "#{terminal_width}x#{new_height}!"
 
