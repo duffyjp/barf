@@ -2,6 +2,7 @@ require_relative "./barf/version"
 
 require "mini_magick"
 require "tco"
+require "parallel"
 
 module Barf
 
@@ -23,10 +24,9 @@ module Barf
 
     # Two dimensional array of pixels:
     image.get_pixels.each_slice(2) do |top, bottom|
-      out = ""
-      top.each_with_index do |pixel, index|
-        out << "\u2584".bg(pixel).fg(bottom[index])
-      end
+      out = Parallel.map_with_index(top) do |pixel, index|
+        "\u2584".bg(pixel).fg(bottom[index])
+      end.join
       puts out
     end
     return nil

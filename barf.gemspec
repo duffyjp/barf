@@ -24,6 +24,7 @@ Gem::Specification.new do |spec|
 
   # Read and process images
   spec.add_dependency "mini_magick"
+  spec.add_dependency "parallel"
 
   # Easier terminal color setting
   spec.add_dependency "tco"
