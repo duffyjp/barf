@@ -17,6 +17,7 @@ module Barf
     new_height     = [2, (image.height * (0.5 * terminal_width / image.width)).to_i * 2].max
 
     image.combine_options do |tmp|
+      tmp.alpha 'remove'
       tmp.resize "#{terminal_width}x#{new_height}!"
       tmp.dither 'FloydSteinberg'
       tmp.remap @palette
