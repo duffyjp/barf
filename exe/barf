@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+require_relative "../lib/barf.rb"
+
+Barf::print(ARGV[0])
