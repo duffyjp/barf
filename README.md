@@ -14,6 +14,16 @@ accomplish this, but they're all way too complex.
 ![Example](README.png)
 
 
+## Details
+* Can display anything supported by imagemagick including web resources.
+* Applies the 256 color extended Ansi color palette with dithering.
+* Multithreading is used to speed up the `tco` color operations.
+
+```bash
+$ barf https://avatars2.githubusercontent.com/u/382216
+```
+
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/duffyjp/barf.

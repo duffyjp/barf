@@ -18,6 +18,7 @@ module Barf
 
     image.combine_options do |tmp|
       tmp.alpha 'remove'
+      tmp.flatten
       tmp.resize "#{terminal_width}x#{new_height}!"
       tmp.dither 'FloydSteinberg'
       tmp.remap @palette
