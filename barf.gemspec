@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   # Read and process images
-  spec.add_dependency "mini_magick"
+  spec.add_dependency "mini_magick", '>= 3.6.0'
   spec.add_dependency "parallel"
 
   # Easier terminal color setting
