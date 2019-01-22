@@ -1,3 +1,5 @@
+[![security](https://hakiri.io/github/duffyjp/barf/master.svg)](https://hakiri.io/github/duffyjp/barf/master)
+
 # Barf
 
 Displays images in your terminal.  There are many existing utilities to 
