@@ -19,7 +19,7 @@ accomplish this, but they're all way too complex.
 ## Details
 * Can display anything supported by imagemagick including web resources.
 * Applies the 256 color extended Ansi color palette with dithering.
-* Multithreading is used to speed up the `tco` color operations.
+* Multithreading is used to speed things up.
 
 ```bash
 $ barf https://avatars2.githubusercontent.com/u/382216
