@@ -1,7 +1,18 @@
 # frozen_string_literal: true
 
 ##
+# A helper module to detect terminal capabilities.
+module Terminal
+  # Checks if the terminal likely supports 24-bit "true color" by checking
+  # the standard COLORTERM environment variable.  Works in iTerm, MacOS Terminal does not as of 2025.
+  def self.truecolor?
+    ENV['COLORTERM'] =~ /^(truecolor|24bit)$/
+  end
+end
+
+##
 # Converts an RGB color to the nearest matching 8-bit ANSI terminal color code.
+# This is now only used as a fallback for terminals without true color support.
 class AnsiColorConverter
   # Pre-calculated lookup table of the 256 ANSI colors and their RGB values.
   ANSI_PALETTE = begin
@@ -46,14 +57,14 @@ class String
   # @param rgb_array [Array<Integer>] An array of [r, g, b] values (0-255).
   # @return [String] The colorized string.
   def fg(rgb_array)
-    apply_color('38;5', rgb_array)
+    apply_color('38', rgb_array)
   end
 
   # Sets the background color of the string using an RGB array.
   # @param rgb_array [Array<Integer>] An array of [r, g, b] values (0-255).
   # @return [String] The colorized string.
   def bg(rgb_array)
-    apply_color('48;5', rgb_array)
+    apply_color('48', rgb_array)
   end
 
   private
@@ -61,18 +72,25 @@ class String
   # Helper method to apply an ANSI color code to the string.
   # It intelligently handles chained calls by combining ANSI codes.
   def apply_color(type_code, rgb_array)
+    color_segment =
+      if Terminal.truecolor?
+        # Use 24-bit "true color" for perfect quality.
+        "#{type_code};2;#{rgb_array.join(';')}"
+      else
+        # Fallback to the 256-color palette for older terminals.
     ansi_code = AnsiColorConverter.convert(*rgb_array)
-    new_color_segment = "#{type_code};#{ansi_code}"
+        "#{type_code};5;#{ansi_code}"
+      end
 
     if (match = match(ANSI_COLOR_REGEX))
       # String is already colorized, so we combine new and existing codes.
       start_seq, content, end_seq = match.captures
-      existing_codes = start_seq[2..-2] # Get codes between \e[ and m
-      updated_codes = existing_codes&.empty? ? new_color_segment : "#{existing_codes};#{new_color_segment}"
+      existing_codes = start_seq[2..-2]
+      updated_codes = existing_codes.empty? ? color_segment : "#{existing_codes};#{color_segment}"
       "\e[#{updated_codes}m#{content}#{end_seq}"
     else
       # String is not colorized, so we wrap it in new codes.
-      "\e[#{new_color_segment}m#{self}\e[0m"
+      "\e[#{color_segment}m#{self}\e[0m"
     end
   end
 end
