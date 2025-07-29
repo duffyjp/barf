@@ -1,7 +1,7 @@
 require_relative "./barf/version"
 
 require "mini_magick"
-require "tco"
+require_relative "./barf/rgb_to_ansi"
 require "parallel"
 
 module Barf
@@ -18,7 +18,6 @@ module Barf
       tmp.alpha 'remove'
       tmp.flatten
       tmp.resize "#{terminal_width}x#{new_height}!"
-      tmp.dither 'FloydSteinberg'
       tmp.remap __dir__ + '/palette.png'
     end
 
