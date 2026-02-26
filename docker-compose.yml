@@ -1,0 +1,11 @@
+services:
+  barf:
+    build: .
+    volumes:
+      - .:/gem
+      - bundle_cache:/usr/local/bundle
+    stdin_open: true
+    tty: true
+
+volumes:
+  bundle_cache:

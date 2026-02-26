@@ -1,0 +1,9 @@
+.git
+.gitignore
+.idea
+.DS_Store
+*.gem
+tmp/
+coverage/
+pkg/
+doc/
