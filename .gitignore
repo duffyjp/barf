@@ -12,4 +12,5 @@
 Gemfile.lock
 .idea/
 .DS_Store
+*.gem
 

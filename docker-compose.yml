@@ -4,6 +4,9 @@ services:
     volumes:
       - .:/gem
       - bundle_cache:/usr/local/bundle
+    environment:
+      - COLORTERM=${COLORTERM:-}
+      - TERM=${TERM:-xterm-256color}
     stdin_open: true
     tty: true
 
